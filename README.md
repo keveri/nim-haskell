@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/keveri/nim-haskell.png)](https://travis-ci.org/keveri/nim-haskell)
+
 # Simple Nim Game
 
 [Nim](http://en.wikipedia.org/wiki/Nim) game in wikipedia.
