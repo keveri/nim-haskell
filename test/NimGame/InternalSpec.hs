@@ -18,24 +18,24 @@ main = hspec spec
 
 spec :: Spec
 spec = do
-  describe "defaultTable" $ do
-    it "equals [5,4,3,2,1]" $ do
+  describe "defaultTable" $
+    it "equals [5,4,3,2,1]" $
       defaultTable `shouldBe` [5,4..1]
 
   describe "checkTable" $ do
-    it "returns default table with invalid table." $ do
+    it "returns default table with invalid table." $
       checkTable [] `shouldBe` defaultTable
 
-    it "returns default table with empty table." $ do
+    it "returns default table with empty table." $
       checkTable [0,0,0] `shouldBe` defaultTable
 
-    it "returns same table if table is valid" $ do
+    it "returns same table if table is valid" $
       checkTable [1,2] `shouldBe` [1,2]
 
   describe "printableTable" $ do
     it "changes numbers to strings containing stars" $ do
       let expected = ["1: **", "2: *"]
-      expected `shouldBe` (printableTable $ Game [2,1] ("",""))
+      expected `shouldBe` printableTable (Game [2,1] ("",""))
 
     it "row count stays the same" $ property $
       \g@(Game t _) -> length t == length (printableTable g)
@@ -48,40 +48,40 @@ spec = do
       let numbers = map (\x -> read (filter C.isDigit x) :: Int) (printableTable g)
       in numbers == [1..(length t)]
 
-  describe "changeTurn" $ do
+  describe "changeTurn" $
     it "swaps players in tuple" $ property $
       \g@(Game t ps) -> changeTurn g == Game t (T.swap ps)
       
-  describe "inTurn" $ do
+  describe "inTurn" $
     it "returns the first player from tuple" $ property $
-      \g@(Game _ (x,y)) -> inTurn g == x
+      \g@(Game _ (x,_)) -> inTurn g == x
 
   describe "validMove" $ do
     let game = Game [2,1,0] ("a","b")
-    it "returns true when move is valid" $ do
+    it "returns true when move is valid" $
       validMove game (1,1) `shouldBe` True
 
-    it "returns false when row doesn't exist" $ do
+    it "returns false when row doesn't exist" $
       validMove game (4,1) `shouldBe` False
 
-    it "returns false when row is empty" $ do
+    it "returns false when row is empty" $
       validMove game (3,1) `shouldBe` False
 
-    it "returns false when star count is too high" $ do
+    it "returns false when star count is too high" $
       validMove game (2,2) `shouldBe` False
 
-    it "returns false when star count is negative" $ do
+    it "returns false when star count is negative" $
       validMove game (2,-1) `shouldBe` False
 
-    it "returns false when row is negative" $ do
+    it "returns false when row is negative" $
       validMove game (-2,1) `shouldBe` False
 
   describe "applyMove" $ do
     let game = Game [2,1] ("","")
-    it "applys the valid move to game" $ do
+    it "applys the valid move to game" $
       applyMove game (1,1) `shouldBe` Right (Game [1,1] ("",""))
 
-    it "returns error string with invalid move" $ do
+    it "returns error string with invalid move" $
       applyMove game (9,1) `shouldBe` Left "Invalid move."
      
   describe "gameOver" $ do
