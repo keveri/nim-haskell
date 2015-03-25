@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-orphans #-}
 module NimGame.InternalSpec (main, spec) where
 
 import NimGame.Internal
